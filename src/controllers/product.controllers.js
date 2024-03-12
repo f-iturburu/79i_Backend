@@ -5,7 +5,7 @@ export const getAllProducts = async (req, res) => {
   // Response == Respuesta
   res.status(200).json(productos);
 };
-
+//por id
 export const getProductById = async (req, res) => {
   const { id } = req.params;
   const productFound = productos.find(product => product.id === id)
@@ -16,3 +16,26 @@ export const getProductById = async (req, res) => {
 
   res.status(404).json({message: "No hemos podido encontrar el producto solicitado"})
 };
+//aca buscamos por categoria
+export const getProductByCategory = async(req,res)=>{
+  const {categoria} = req.params;
+  const productMatch = productos.filter(p => p.categoria ===  categoria)
+  if(productMatch.length >0){
+    return res.status(200).json(productMatch)
+  }
+  res.status(404).json({message:"no hemos encontrado productos con esta categoria"})
+}
+//por ascendente o descendente segun el precio
+export const getProductByPrice = async(req,res)=>{
+  const {orden} = req.params;
+  if(orden === "asc"){
+      const productosAsc = productos.slice().sort((a,b)=>
+      a.precio - b.precio)
+      return res.status(200).json(productosAsc)
+  }else if(orden === "desc") {
+    const productosDesc = productos.slice().sort((a,b)=>
+    b.precio - a.precio)
+    return res.status(200).json(productosDesc)
+  }
+  res.status(404).json({message:"el parametro de orden no es correcto porfavor pruebe con asc o desc"})
+}
