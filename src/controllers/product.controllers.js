@@ -21,6 +21,11 @@ export const getProductById = async (req, res) => {
 
 export const getProductByCategory = async (req, res) => {
   const { categoria } = req.params;
+  console.log(categoria);
+
+  if (categoria === 'all') {
+    return res.status(200).json(productos);
+  }
 
   const filteredProducts = productos.filter((product) => {
     return product.categoria === categoria;
