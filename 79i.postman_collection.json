@@ -41,8 +41,34 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "8510b6bc-708e-4888-94bc-c69795c5c206"
+							"value": ""
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createProduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"8510b6bc-708e-4888-94bc-c69795c5c206\",\r\n    \"nombre\": \"Cafe Colombiano\",\r\n    \"categoria\": \"Cafe\",\r\n    \"precio\": 25,\r\n    \"imagen\":\r\n      \"https://www.greenstyle.com.ar/wp-content/uploads/2020/07/Cafetera-Market-Bra-12.jpg\"\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/product",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"product"
 					]
 				}
 			},
