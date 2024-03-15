@@ -8,9 +8,9 @@ import {
 
 const router = Router()
 
-router.get('/productos', getAllProducts)
-router.get('/producto/:id', getProductById)
-router.get('/productos/category/:category', getProductByCategory)
-router.get('/productos/price/:sortOrder', getProductByPrice)
+router.get('/products', getAllProducts)
+router.get('/product/:id', getProductById)
+router.get('/products/category/:category', getProductByCategory)
+router.get('/products/price/:sortOrder', getProductByPrice)
 
 export default router

@@ -1,20 +1,12 @@
-import express from 'express'
+import app from './app.js'
 import { PORT } from './config/config.js'
-import ProductRoutes from './routes/product.routes.js'
-import morgan from 'morgan'
-import cors from 'cors'
-
-const app = express()
-
-app.use(express.json())
-app.use(morgan('dev'))
-app.use(cors())
-
-app.use(ProductRoutes)
-
-app.listen(PORT, async () => {
-	console.log(`La aplicación esta escuchando el puerto ${PORT}`)
-})
+import './database/database.js'
+async function main() {
+	await app.listen(PORT, async () => {
+		console.log(`La aplicación esta escuchando el puerto ${PORT}`)
+	})
+}
+main()
 
 // Crear el endpoint getProductByCategory (ruta y controlador) y debe devolver los productos con la categoria recibida por parametro.
 // Crear el endpoint sortProductByPrice que debe recibir un parametro que puede adoptar los valores de "asc" o "desc",
