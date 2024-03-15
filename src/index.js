@@ -21,3 +21,8 @@ app.listen(PORT, async () => {
 // y debe devolver los productos ordenados por precio.
 
 // Debe tener en consideración casos de error, productos no encontrados o parametro recibido incorrecto.
+// ========================================================================================================
+
+//Tarea 13/03/2024
+
+//Refactorizar los dos endpoints de la tarea de la clase anterior (getProductByCategory, sortProductByPrice) utilizando metodos de mongoose.
