@@ -39,3 +39,23 @@ export const getProductByCategory = async (req, res) => {
     message: `No se encontraron productos en la categoría ${categoria}`,
   });
 };
+
+export const sortProductByPrice = async (req, res) => {
+  const { order } = req.params;
+
+  if (order !== 'asc' && order !== 'desc') {
+    return res.status(400).json({
+      message: 'El parámetro de orden debe ser "asc" o "desc"',
+    });
+  }
+
+  const sortedProducts = productos.slice().sort((a, b) => {
+    if (order === 'asc') {
+      return a.precio - b.precio;
+    } else {
+      return b.precio - a.precio;
+    }
+  });
+
+  res.status(200).json(sortedProducts);
+};

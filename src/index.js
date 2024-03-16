@@ -16,8 +16,8 @@ app.listen(PORT, async () => {
   console.log(`La aplicación esta escuchando el puerto ${PORT}`);
 });
 
-// Crear el endpoint getProductByCategory (ruta y controlador) y debe devolver los productos con la categoria recibida por parametro.
-// Crear el endpoint sortProductByPrice que debe recibir un parametro que puede adoptar los valores de "asc" o "desc",
+// Crear el endpoint getProductByCategory (ruta y controlador) y debe devolver los productos con la categoria recibida por parámetro.
+// Crear el endpoint sortProductByPrice que debe recibir un parámetro que puede adoptar los valores de "asc" o "desc",
 // y debe devolver los productos ordenados por precio.
 
-// Debe tener en consideración casos de error, productos no encontrados o parametro recibido incorrecto.
+// Debe tener en consideración casos de error, productos no encontrados o parámetro recibido incorrecto.
