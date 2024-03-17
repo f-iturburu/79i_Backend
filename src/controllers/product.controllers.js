@@ -1,53 +1,77 @@
-import { productos } from '../db/db.js'
-
+import { ProductModel } from '../models/Product.model.js'
 export const getAllProducts = async (req, res) => {
-	// Request == Petición
-	// Response == Respuesta
-	res.status(200).json(productos)
+	try {
+		const products = await ProductModel.find()
+		return res.status(200).json(products)
+	} catch (error) {
+		return res.status(404).json({ message: error.message })
+	}
+}
+
+export const createProduct = async (req, res) => {
+	try {
+		const newProduct = await ProductModel.create({ ...req.body })
+		return res.status(201).json(newProduct)
+	} catch (error) {
+		console.log(error)
+		return res.status(400).json({ message: error.message })
+	}
 }
 
 export const getProductById = async (req, res) => {
 	const { id } = req.params
-	const productFound = productos.find((product) => product.id === id)
-
-	if (productFound) {
+	try {
+		const productFound = await ProductModel.findById(id)
 		return res.status(200).json(productFound)
+	} catch (error) {
+		return res
+			.status(404)
+			.json({ message: 'No hemos podido encontrar el producto solicitado' })
 	}
-
-	res
-		.status(404)
-		.json({ message: 'No hemos podido encontrar el producto solicitado' })
 }
 
 export const getProductByCategory = async (req, res) => {
 	const { category } = req.params
-	const filterProducts = productos.filter(
-		(producto) =>
-			producto.categoria.toLowerCase() === category.toString().toLowerCase()
-	)
-
-	if (!filterProducts || filterProducts.length === 0) {
-		return res
-			.status(404)
-			.json({ messagge: 'no hay productos en esa categoria' })
+	try {
+		const productsByCategory = await ProductModel.find({
+			categoria: category,
+		})
+		return res.status(200).json(productsByCategory)
+	} catch (error) {
+		return res.status(404).json({ message: error.message })
 	}
-	return res.status(200).json(filterProducts)
 }
 
-export const getProductByPrice = async (req, res) => {
+export const getProductsSortedByPrice = async (req, res) => {
 	const { sortOrder } = req.params
-	console.log(sortOrder)
-	let sortedProducts = null
+	try {
+		const sortedProductsByPrice = await ProductModel.find().sort({
+			precio: sortOrder,
+		})
+		return res.status(200).json(sortedProductsByPrice)
+	} catch (error) {
+		return res
+			.status(400)
+			.json({ message: `${sortOrder} no es un parametro valido` })
+	}
+}
 
-	if (sortOrder === 'asc') {
-		sortedProducts = productos.sort((a, b) => a.precio - b.precio)
+export const deleteProduct = async (req, res) => {
+	try {
+		const { id } = req.params
+		const productFound = await ProductModel.findById(id)
+		if (!productFound) {
+			return res
+				.status(400)
+				.json({ message: `No se encontro el producto con id ${id}` })
+		}
+		await ProductModel.deleteOne({ _id: id })
+		return res
+			.status(200)
+			.json({ message: `El producto con id ${id} se elimino con exito` })
+	} catch (error) {
+		res
+			.status(400)
+			.json({ message: `No se encontro el producto con id ${req.params.id}` })
 	}
-	if (sortOrder === 'desc') {
-		sortedProducts = productos.sort((a, b) => b.precio - a.precio)
-	}
-
-	if (sortOrder !== 'asc' && sortOrder !== 'desc') {
-		return res.status(400).json({ messagge: 'el filtro es invalido' })
-	}
-	return res.status(200).json(sortedProducts)
 }
