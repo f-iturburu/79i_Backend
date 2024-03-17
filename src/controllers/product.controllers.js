@@ -79,12 +79,13 @@ export const deleteProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
 	try {
 		const { id } = req.params
-		const product = await ProductModel.findByIdAndUpdate(id, req.body)
+		const product = await ProductModel.findById(id)
 		if (!product) {
 			return res.status(404).json({ message: 'Producto no encontrado' })
 		}
-		const updatedProduct = await ProductModel.findById(id)
-		res.status(200).json(updatedProduct)
+		product.set(req.body)
+		await product.save()
+		res.status(200).json(product)
 	} catch (error) {
 		res.status(500).json({ message: error.message })
 	}
