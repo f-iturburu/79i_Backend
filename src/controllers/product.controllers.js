@@ -75,3 +75,17 @@ export const deleteProduct = async (req, res) => {
 			.json({ message: `No se encontro el producto con id ${req.params.id}` })
 	}
 }
+
+export const updateProduct = async (req, res) => {
+	try {
+		const { id } = req.params
+		const product = await ProductModel.findByIdAndUpdate(id, req.body)
+		if (!product) {
+			return res.status(404).json({ message: 'Producto no encontrado' })
+		}
+		const updatedProduct = await ProductModel.findById(id)
+		res.status(200).json(updatedProduct)
+	} catch (error) {
+		res.status(500).json({ message: error.message })
+	}
+}
