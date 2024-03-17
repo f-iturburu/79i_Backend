@@ -77,9 +77,10 @@ export const deleteProduct = async (req, res) => {
 }
 
 export const updateProduct = async (req, res) => {
+	const { id } = req.params
 	try {
-		const { id } = req.params
 		const product = await ProductModel.findById(id)
+		console.log(product)
 		if (!product) {
 			return res.status(404).json({ message: 'Producto no encontrado' })
 		}
@@ -87,6 +88,11 @@ export const updateProduct = async (req, res) => {
 		await product.save()
 		res.status(200).json(product)
 	} catch (error) {
+		if (error.name === 'CastError') {
+			return res
+				.status(404)
+				.json({ message: `No se encontraron productos con el id ${id}` })
+		}
 		res.status(500).json({ message: error.message })
 	}
 }
