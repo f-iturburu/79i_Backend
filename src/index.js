@@ -9,7 +9,6 @@ const app = express()
 app.use(express.json())
 app.use(morgan("dev"))
 app.use(cors())
-app.use(express.urlencoded())
 app.use(ProductRoutes)
 
 app.listen(PORT, async()=>{

@@ -9,10 +9,10 @@ import {
 
 const router = Router();
 
-router.get("/productos", getAllProducts);
-router.get("/productosCategory/:categoria",getProductByCategory)
-router.get("/producto/:id", getProductById);
-router.get("/productos/:orden",getProductByPrice)
+router.get("/products", getAllProducts);
+router.get("/product/:categoria",getProductByCategory)
+router.get("/product/:id", getProductById);
+router.get("/product/:orden",getProductByPrice)
 router.post('/product',createProduct)
 
 export default router;
