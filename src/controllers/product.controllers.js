@@ -1,10 +1,25 @@
 import { productos } from "../db/db.js";
-
+import Product from "../models/product.model.js"
 export const getAllProducts = async (req, res) => {
   // Request == Petición
   // Response == Respuesta
   res.status(200).json(productos);
 };
+//creando productos
+export const createProduct = async(req,res)=>{
+  const {nombre,categoria,precio,imagen} = req.body
+  try {
+    const product = Product.create({
+      nombre:nombre,
+      categoria:categoria,
+      precio:precio,
+      imagen:imagen
+    })
+    res.status(201).json({message:"el objeto fue creado"})
+  } catch (error) {
+    return res.status(500).json({message:error.message})
+  }
+}
 //por id
 export const getProductById = async (req, res) => {
   const { id } = req.params;
